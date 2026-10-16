@@ -16,7 +16,7 @@ Prometheus
 
 📊 Grafana
 
-![evidencias do grafana](docs/grafana.png)
+![evidencias do grafana](grafana.png)
 
 
 Grafana
