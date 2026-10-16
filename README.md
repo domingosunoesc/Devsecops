@@ -6,22 +6,22 @@ Imagem publicada automaticamente pela pipeline CI/CD.
 🔄 GitHub Actions
 Pipeline executando com sucesso.
 
-![alt text](github-actions.png)
+![alt text](docs/github-actions.png)
 
 📡 Prometheus
 Target da aplicação em estado UP.
-![alt text](prometheus.png)
+![alt text](docs/prometheus.png)
 
 Prometheus
 
 📊 Grafana
 Dashboard exibindo métricas da JVM e da aplicação.
-![alt text](grafana.png)
+![alt text](docs/grafana.png)
 
 
 Grafana
 
 📋 Graylog
 Logs centralizados da aplicação.
-![alt text](graylog.png)
+![alt text](docs/graylog.png)
 
