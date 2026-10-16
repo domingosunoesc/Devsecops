@@ -1,5 +1,5 @@
 🐳 Docker Hub
-Imagem publicada automaticamente pela pipeline CI/CD.
+
 ![Imagem publicada automaticamente pela pipeline CI/CD.](docs/dockhub.png)
 
 
