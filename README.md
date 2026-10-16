@@ -1,6 +1,6 @@
 🐳 Docker Hub
 Imagem publicada automaticamente pela pipeline CI/CD.
-![alt text](dockhub.png)
+![alt text](docs/dockhub.png)
 
 
 🔄 GitHub Actions
