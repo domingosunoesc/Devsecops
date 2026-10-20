@@ -1,51 +1,85 @@
 package br.edu.ifc.devsecops;
 
+import br.edu.ifc.devsecops.model.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
+@RequestMapping("/api/books")
 public class ApiController {
 
     private static final Logger logger =
             LoggerFactory.getLogger(ApiController.class);
 
-    @GetMapping("/api/hello")
-    public Map<String, String> hello() {
+    private final List<Book> books = new ArrayList<>();
 
-        logger.info("Endpoint /api/hello executado");
+    public ApiController() {
+        books.add(new Book(
+                1L,
+                "Clean Code",
+                "Robert Martin",
+                "Programacao"));
 
-        return Map.of(
-                "message",
-                "Projeto DevSecOps funcionando!"
-        );
+        books.add(new Book(
+                2L,
+                "Spring in Action",
+                "Craig Walls",
+                "Java"));
     }
 
-    @GetMapping("/api/success")
-    public ResponseEntity<String> success() {
+    @GetMapping
+    public List<Book> findAll() {
 
-        logger.info("Requisicao com sucesso");
+        logger.info("Listagem de livros realizada");
 
-        return ResponseEntity.ok("SUCCESS");
+        return books;
     }
 
-    @GetMapping("/api/bad-request")
-    public ResponseEntity<String> badRequest() {
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(
+            @PathVariable Long id) {
 
-        logger.warn("Bad request gerado");
+        logger.info("Consulta livro {}", id);
 
-        return ResponseEntity.badRequest().body("BAD REQUEST");
+        return books.stream()
+                .filter(book -> book.getId().equals(id))
+                .findFirst()
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
+                .orElseGet(() -> {
+
+                    logger.warn(
+                      "Livro {} nao encontrado", id);
+
+                    return ResponseEntity.notFound()
+                            .build();
+                });
     }
 
-    @GetMapping("/api/error")
-    public ResponseEntity<String> error() {
+    @PostMapping
+    public ResponseEntity<Book> create(
+            @RequestBody Book book) {
 
-        logger.error("Erro proposital para monitoramento");
+        books.add(book);
 
-        return ResponseEntity.internalServerError().body("ERROR");
+        logger.info(
+          "Livro cadastrado: {}",
+          book.getTitulo());
+
+        return ResponseEntity.ok(book);
+    }
+
+    @GetMapping("/error")
+    public ResponseEntity<String> simulateError() {
+
+        logger.error(
+          "Erro proposital biblioteca");
+
+        return ResponseEntity.internalServerError()
+                .body("ERRO");
     }
 }
